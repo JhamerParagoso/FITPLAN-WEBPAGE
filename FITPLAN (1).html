@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FitPlan</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #000; color: white; }
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.7);
+        padding: 20px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo { font-size: 28px; color: #00ff00; font-weight: bold; }
+
+    nav ul { display: flex; list-style: none; gap: 30px; }
+    
+    nav a { color: white; text-decoration: none; padding: 8px; border-radius: 5px; transition: 0.5s; }
+
+    nav a:hover, nav a.active { color: #000; background: #00ff00; }
+
+    .join-btn { background: #00ff00; color: black; padding: 12px 24px; border-radius: 100px; font-weight: bold; text-decoration: none; }
+
+    section { padding: 100px 50px;}
+
+    .hero { display: flex; align-items: center; justify-content: center; text-align: center; height: 100vh;
+
+            background: linear-gradient(rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat; }
+    .hero h1 { font-size: 100px;}
+    .highlight { color: #00ff00; }
+    .hero p { font-size: clamp(16px, 2vw, 24px); color: #ccc; margin-bottom: 20px; }
+    .btn { padding: 15px 40px; border-radius: 100px; font-weight: bold; background: #00ff00; color: black; text-decoration: none; margin: 10px; transition: 0.3s;}
+    .section-title { font-size: 50px; text-align: center; margin-bottom: 60px; color: #00ff00; }
+
+ 
+    .stats { background: #111; text-align: center; padding: 50px 20px; }
+    .stat-number { font-size: 50px ; color: #00ff00; font-weight: bold; margin-bottom: 10px; }
+
+
+    .why-grid { display: grid; gap: 40px; max-width: 1200px; margin: 0 auto; }
+    .why-image { height: 400px; background: linear-gradient(rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat; border-radius: 20px; }
+    .why-item { background: #222; padding: 30px; border-radius: 15px; cursor: pointer; transition: 0.3s; }
+    .why-item:hover { background: #00ff00; color: black; transform: translateX(20px); }
+
+   
+    .programs { background: #111; text-align: center; padding: 60px 20px; }
+    .programs-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+    .program-card { background: #222; padding: 40px 30px; border-radius: 20px; text-align: center; border-top: 5px solid #00ff00; transition: 0.3s; }
+    .program-card:hover { transform: translateY(-10px); }
+    .program-title { font-size: 28px; margin-bottom: 15px; color: #00ff00; }
+    .program-duration { color: #00ff00; font-size: 20px; font-weight: bold; margin-bottom: 25px; }
+    .program-features { list-style: none; text-align: left; margin-bottom: 200px; }
+    .program-features li { padding: 10px; padding-left: 30px; position: relative; font-size: 16px; }
+    .program-features li::before { content: "✓"; position: absolute; left: 0; color: #00ff00; font-weight: bold; font-size: 18px; }
+        .features { padding: 120px 50px;}
+  
+    .hero-about { background: linear-gradient(rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; height: 80vh; }
+    .about-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 40px; max-width: 1200px; margin: 60px auto 0; }
+    .about-image { height: 400px; background: linear-gradient(rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat; border-radius: 20px; }
+    .about-text p { font-size: 18px; margin-bottom: 25px; line-height: 1.7; }
+
+  
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(350px,1fr)); gap: 50px; max-width: 1200px; margin: 0 auto; }
+    .contact-info h3, .contact-form h3 { color: #00ff00; margin-bottom: 30px; font-size: 28px; }
+    .contact-item { display: flex; align-items: flex-start; margin-bottom: 30px; gap: 20px; }
+    .icon { width: 60px; height: 60px; background: #00ff00; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; font-size: 24px; flex-shrink: 0; }
+    .contact-info p { color: #ccc; margin: 0; line-height: 1.6; }
+    .contact-form { background: #222; padding: 50px; border-radius: 20px; border: 1px solid #333; }
+    .form-group { margin-bottom: 25px; }
+    .form-group label { display: block; margin-bottom: 10px; color: #ccc; font-weight:bold; }
+    .form-group input, .form-group textarea { width: 100%; padding: 18px; background: #333; border: 2px solid #444; border-radius: 12px; color: white; font-size: 16px; transition: 0.3s; }
+    .form-group input:focus, .form-group textarea:focus { border-color: #00ff00; outline: none; }
+    .form-group textarea { height: 150px; resize: vertical; }
+    .btn-full { width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 18px; border: none; cursor: pointer; margin-top: 10px; background: #00ff00; color: black; }
+
+    @media (max-width: 768px) {
+        header { flex-direction: column; gap: 20px; padding: 20px; }
+        nav ul { flex-direction: column; gap: 15px; }
+        .stats-grid, .why-grid, .programs-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">FitPlan</div>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#signup">Join</a></li>
+        </ul>
+    </nav>
+    <a href="#signup" class="join-btn">Join Now</a>
+</header>
+
+
+<section id="home" class="hero">
+    <div>
+        <h1>NO EXCUSES.<br><span class="highlight">ONLY</span><br>RESULTS.</h1>
+        <p>Transform your body with certified trainers, modern equipment!</p>
+        <a href="#signup" class="btn">Start Free Trial</a>
+    </div>
+</section>
+
+
+<section class="stats">
+    <h2 class="section-title">Trusted By Thousands</h2>
+    <div class="stats-grid">
+        <div class="stat-item"><div class="stat-number">10K+</div><p>Members</p></div>
+        <div class="stat-item"><div class="stat-number">5+</div><p>Years Experience</p></div>
+        <div class="stat-item"><div class="stat-number">4.9</div><p>Average Rating</p></div>
+    </div>
+</section>
+
+
+<section id="about">
+    <h2 class="section-title">About FitPlan</h2>
+    <div class="about-grid">
+        <div class="about-image"></div>
+        <div class="about-text">
+            <p>FitPlan is your ultimate fitness community where certified trainers, modern equipment, and personalized programs help you achieve your fitness goals. Join thousands of motivated members and experience a supportive environment for transformation and growth.</p>
+            <p>Our mission is to provide high-quality fitness training, nutritional guidance, and a real community to ensure every member succeeds. From beginners to professional athletes, FitPlan has programs tailored to everyone.</p>
+        </div>
+    </div>
+</section>
+
+
+<section id="why">
+    <h2 class="section-title">Why Choose FitPlan?</h2>
+    <div class="why-grid">
+        <div class="why-image"></div>
+        <div>
+            <div class="why-item"><h3>Certified Trainers</h3><p>Expert coaches create science-backed workout programs</p></div>
+            <div class="why-item"><h3>Modern Equipment</h3><p>State-of-the-art gym with latest fitness technology</p></div>
+            <div class="why-item"><h3>Nutrition Plans</h3><p>Custom meal plans tailored to your goals</p></div>
+            <div class="why-item"><h3>Real Community</h3><p>Motivated members who push you to succeed</p></div>
+        </div>
+    </div>
+</section>
+
+
+<section class="programs">
+    <h2 class="section-title">Our Training Programs</h2>
+    <div class="programs-grid">
+        <div class="program-card">
+            <h3 class="program-title">Beginner Transformation</h3>
+            <div class="program-duration">12 Weeks</div>
+            <ul class="program-features">
+                <li>3x weekly full-body workouts</li>
+                <li>Beginner-friendly exercises</li>
+                <li>Custom nutrition plan</li>
+                <li>Weekly progress tracking</li>
+            </ul>
+            <a href="#signup" class="btn">Start Now</a>
+        </div>
+        <div class="program-card">
+            <h3 class="program-title">Fat Burn Pro</h3>
+            <div class="program-duration">8 Weeks</div>
+            <ul class="program-features">
+                <li>HIIT + strength training</li>
+                <li>Calorie tracking app</li>
+                <li>4x weekly sessions</li>
+                <li>Metabolism boost focus</li>
+            </ul>
+            <a href="#signup" class="btn">Get Lean</a>
+        </div>
+        <div class="program-card">
+            <h3 class="program-title">Muscle Builder</h3>
+            <div class="program-duration">16 Weeks</div>
+            <ul class="program-features">
+                <li>5x weekly split training</li>
+                <li>Progressive overload</li>
+                <li>Protein optimization</li>
+                <li>1:1 trainer sessions</li>
+            </ul>
+            <a href="#signup" class="btn">Build Mass</a>
+        </div>
+    </div>
+</section>
+
+
+<section id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-grid">
+        <div class="contact-info">
+            <h3>Visit Our Gym</h3>
+            <div class="contact-item"><div class="icon">📍</div><p><strong>San Pedro Street</strong><br>Cagayan De Oro City, Carmen</p></div>
+            <div class="contact-item"><div class="icon">📞</div><p>09XX-XXX-XXXX</p></div>
+            <div class="contact-item"><div class="icon">✉️</div><p>Fitplan@gmail.com</p></div>
+            <div class="contact-item"><div class="icon">🕒</div><p><strong>Hours:</strong><br>Mon-Fri: 5AM-10PM<br>Sat-Sun: 7AM-8PM</p></div>
+        </div>
+        <div class="contact-form">
+            <h3>Send us a message</h3>
+            <form onsubmit="event.preventDefault(); alert('Message Sent!');">
+                <div class="form-group"><label>Full Name</label><input type="text" required></div>
+                <div class="form-group"><label>Email</label><input type="email" required></div>
+                <div class="form-group"><label>Phone</label><input type="tel"></div>
+                <div class="form-group"><label>Message</label><textarea placeholder="Tell us how we can help you..." required></textarea></div>
+                <button class="btn-full" type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<section id="signup">
+    <h2 class="section-title">Join FitPlan</h2>
+    <div class="programs-grid">
+        <div class="program-card">
+            <h3 class="program-title">Sign Up</h3>
+            <form onsubmit="event.preventDefault(); alert('Account Created! Welcome!');">
+                <div class="form-group"><label>First Name</label><input type="text" required></div>
+                <div class="form-group"><label>Last Name</label><input type="text" required></div>
+                <div class="form-group"><label>Email</label><input type="email" required></div>
+                <div class="form-group"><label>Phone</label><input type="tel" required></div>
+                <div class="form-group"><label>Password</label><input type="password" required></div>
+                <button class="btn-full" type="submit">Create Account</button>
+            </form>
+        </div>
+        <div class="program-card">
+            <h3 class="program-title">Start Free Trial</h3>
+            <form onsubmit="event.preventDefault(); alert('Free Trial Started!');">
+                <div class="form-group"><label>First Name</label><input type="text" required></div>
+                <div class="form-group"><label>Email</label><input type="email" required></div>
+                <div class="form-group"><label>Phone</label><input type="tel" required></div>
+                <button class="btn-full" type="submit">Start FREE Trial</button>
+            </form>
+            <div class="features">
+                <h4>Free Trial Includes:</h4><br>
+                <ul>
+                    <li>14 Days Unlimited Access</li><br>
+                    <li>Personal Trainer</li><br>
+                    <li>Custom Nutrition Plan</li><br> </ul></div>
+                </body>
+                </html>
